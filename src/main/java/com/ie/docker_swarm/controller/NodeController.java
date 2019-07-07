@@ -18,7 +18,7 @@ public class NodeController {
         this.swarmHandler = swarmHandler;
     }
 
-    @RequestMapping(value = "/" , method = RequestMethod.GET)
+    @RequestMapping(value = "/" , method ={RequestMethod.OPTIONS, RequestMethod.GET})
     public ResponseMessage<java.util.List<com.github.dockerjava.api.model.SwarmNode>> getNode(){
         return new ResponseMessage<>(1,swarmHandler.getNodes());
     }

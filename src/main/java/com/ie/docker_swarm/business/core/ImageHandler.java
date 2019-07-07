@@ -1,6 +1,7 @@
 package com.ie.docker_swarm.business.core;
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.command.InspectImageResponse;
 import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.api.model.SearchItem;
 import com.github.dockerjava.core.command.BuildImageResultCallback;
@@ -26,7 +27,7 @@ public class ImageHandler {
 
     public boolean pullImage(String name) {
         try {
-            dockerClient.pullImageCmd(name).exec(new PullImageResultCallback()).awaitCompletion(30, TimeUnit.SECONDS);
+            dockerClient.pullImageCmd(name).exec(new PullImageResultCallback()).awaitCompletion(120, TimeUnit.SECONDS);
             return true;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -35,7 +36,7 @@ public class ImageHandler {
 
     }
 
-    public boolean pushIamge(String name) {
+    public boolean pushImage(String name) {
         try {
             dockerClient.pushImageCmd(name).exec(new PushImageResultCallback());
             return true;
@@ -61,5 +62,8 @@ public class ImageHandler {
     }
     public List<SearchItem> searchIamges(String search){
         return dockerClient.searchImagesCmd(search).exec();
+    }
+    public InspectImageResponse inspectImage(String id){
+        return dockerClient.inspectImageCmd(id).exec();
     }
 }

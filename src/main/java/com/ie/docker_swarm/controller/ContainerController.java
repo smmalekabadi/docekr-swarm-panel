@@ -21,12 +21,12 @@ public class ContainerController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseMessage getContainer(@RequestParam(required = false) String id) {
         if (id == null)
-            return new ResponseMessage(1, containerHandler.getContainerList());
+            return new ResponseMessage<>(1, containerHandler.getContainerList());
         else
-            return new ResponseMessage(1,containerHandler.getTopContainer(id));
+            return new ResponseMessage<>(1,containerHandler.getTopContainer(id));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method =RequestMethod.PUT)
     public ResponseMessage<String> addContainer(@RequestParam(required = false) String cmd,@RequestParam String name) {
         return new ResponseMessage<>(1,containerHandler.createContainer(name ,cmd));
 

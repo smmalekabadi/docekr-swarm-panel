@@ -14,7 +14,7 @@ public class NetworkController {
         this.networkHandler = networkHandler;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = {RequestMethod.OPTIONS,RequestMethod.GET})
     public ResponseMessage getNetwork() {
         return new ResponseMessage<>(1, networkHandler.getNetworks());
     }

@@ -24,12 +24,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .formLogin().permitAll();
 //    }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("**/**").httpBasic()
-                .and().authorizeRequests().anyRequest().authenticated();
-        http.csrf().disable();
-    }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.antMatcher("**/**").httpBasic()
+//                .and().authorizeRequests().anyRequest().authenticated();
+//        http.csrf().disable();
+//    }
 
     @Override
     @Bean
@@ -40,7 +40,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/ie/login/");
+                .antMatchers("/**/**")
+                .antMatchers("/**");
 //                .antMatchers("/oauth/token");
     }
 

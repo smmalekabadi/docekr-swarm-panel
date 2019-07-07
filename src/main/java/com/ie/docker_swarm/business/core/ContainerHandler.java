@@ -2,10 +2,8 @@ package com.ie.docker_swarm.business.core;
 
 
 import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.command.TopContainerResponse;
+import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.model.Container;
-import com.github.dockerjava.core.DefaultDockerClientConfig;
-import com.github.dockerjava.core.DockerClientBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -42,8 +40,8 @@ public class ContainerHandler {
         return dockerClient.listContainersCmd().withShowAll(true).exec();
 
     }
-    public TopContainerResponse getTopContainer(String id){
-        return dockerClient.topContainerCmd(id).exec();
+    public InspectContainerResponse getTopContainer(String id){
+        return dockerClient.inspectContainerCmd(id).exec();
     }
 
     public Boolean deleteContainer(String id) {

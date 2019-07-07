@@ -16,11 +16,12 @@ public class ServiceController {
 
         this.serviceHandler = serviceHandler;
     }
-    @RequestMapping(value = "/" , method = RequestMethod.GET)
-    public ResponseMessage<List> getService(){
-
-        return new ResponseMessage<>(1,serviceHandler.getServiceList());
-
+    @RequestMapping(value = "/" , method ={RequestMethod.OPTIONS, RequestMethod.GET})
+    public ResponseMessage getService(@RequestParam(required = false) String id){
+        if (id == null) {
+            return new ResponseMessage<>(1, serviceHandler.getServiceList());
+        }else
+            return new ResponseMessage<>(1,serviceHandler.inspect(id));
     }
     @RequestMapping(value = "/" , method = RequestMethod.PUT)
     public ResponseMessage<String> addService(@RequestBody ServiceSpec serviceSpec){

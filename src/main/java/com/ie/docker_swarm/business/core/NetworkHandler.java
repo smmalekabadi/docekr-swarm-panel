@@ -42,4 +42,7 @@ public class NetworkHandler {
             return false;
         }
     }
+    public Network inspect(){
+        return dockerClient.inspectNetworkCmd().exec();
+    }
 }

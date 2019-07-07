@@ -14,19 +14,19 @@ public class SwarmController {
     public SwarmController(SwarmHandler swarmHandler) {
         this.swarmHandler = swarmHandler;
     }
-    @RequestMapping(value =  "/" , method = RequestMethod.GET)
+    @RequestMapping(value =  "/" , method = {RequestMethod.OPTIONS,RequestMethod.GET})
     public ResponseMessage<Swarm> get(){
         return new ResponseMessage<>(1,swarmHandler.getClusters());
     }
-    @RequestMapping(value = "/init", method = RequestMethod.POST)
+    @RequestMapping(value = "/init", method = {RequestMethod.OPTIONS,RequestMethod.POST})
     public ResponseMessage<Boolean> initSwarm(@RequestBody SwarmSpec swarmSpec){
         return new ResponseMessage<>(1,swarmHandler.init(swarmSpec));
     }
-    @RequestMapping(value = "/join",method = RequestMethod.GET)
+    @RequestMapping(value = "/join",method = {RequestMethod.OPTIONS,RequestMethod.GET})
     public ResponseMessage<Boolean> joinSwarm(){
         return new ResponseMessage<>(1,swarmHandler.join());
     }
-    @RequestMapping(value = "/leave",method = RequestMethod.GET)
+    @RequestMapping(value = "/leave",method = {RequestMethod.OPTIONS,RequestMethod.GET})
     public ResponseMessage<Boolean> leaveSwarm(){
         return new ResponseMessage<>(1,swarmHandler.leave());
     }

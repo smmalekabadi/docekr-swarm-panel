@@ -30,5 +30,8 @@ public class VolumeHandler {
             return false;
         }
     }
+    public InspectVolumeResponse inspect(String name){
+        return dockerClient.inspectVolumeCmd(name).exec();
+    }
 
 }

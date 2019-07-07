@@ -41,6 +41,9 @@ public class ServiceHandler {
             return false;
         }
     }
+    public com.github.dockerjava.api.model.Service inspect(String id){
+        return dockerClient.inspectServiceCmd(id).exec();
+    }
 
     public List<com.github.dockerjava.api.model.Service> getServiceList() {
         return dockerClient.listServicesCmd().exec();
