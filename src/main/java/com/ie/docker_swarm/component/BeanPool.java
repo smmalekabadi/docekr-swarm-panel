@@ -5,13 +5,17 @@ import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class BeanPool {
     public BeanPool() {
 
     }
-
+    @Bean
+    public RestTemplate noProxyRestTemplate() {
+        return new RestTemplate();
+    }
     @Bean
     public DockerClient dockerClient() {
         DefaultDockerClientConfig.Builder config

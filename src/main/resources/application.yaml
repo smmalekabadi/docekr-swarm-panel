@@ -1,5 +1,7 @@
 server:
   port: 8080
+#  servlet:
+#    context-path: /morkia/
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -34,4 +36,3 @@ spring:
           lob:
             non_contextual_creation: true
     show-sql: false
-
