@@ -31,16 +31,23 @@ public class ContainerHandler {
 //        dockerClient.conta
 //        a.forEach( b-> System.out.println(b.getSpec().getMode().getReplicated().getReplicas()));
     }
-    public String createContainer(String name ,String cmd){
-        return dockerClient.createContainerCmd(name).withCmd().exec().getId();
+
+    public String createContainer(String name, String image) {
+        try {
+            return dockerClient.createContainerCmd(name).withName(name).withImage(image).exec().getId();
+        }catch (Exception e){
+            return null;
+        }
 
     }
+
     public List<Container> getContainerList() {
 
         return dockerClient.listContainersCmd().withShowAll(true).exec();
 
     }
-    public InspectContainerResponse getTopContainer(String id){
+
+    public InspectContainerResponse getTopContainer(String id) {
         return dockerClient.inspectContainerCmd(id).exec();
     }
 
@@ -78,7 +85,7 @@ public class ContainerHandler {
                     break;
             }
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

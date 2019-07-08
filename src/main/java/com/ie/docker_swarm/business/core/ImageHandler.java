@@ -29,7 +29,7 @@ public class ImageHandler {
         try {
             dockerClient.pullImageCmd(name).exec(new PullImageResultCallback()).awaitCompletion(120, TimeUnit.SECONDS);
             return true;
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

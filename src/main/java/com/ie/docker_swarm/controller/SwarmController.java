@@ -3,6 +3,7 @@ package com.ie.docker_swarm.controller;
 import com.github.dockerjava.api.model.Swarm;
 import com.github.dockerjava.api.model.SwarmSpec;
 import com.ie.docker_swarm.business.core.SwarmHandler;
+import com.ie.docker_swarm.business.data.StartModel;
 import com.ie.docker_swarm.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,8 @@ public class SwarmController {
         this.swarmHandler = swarmHandler;
     }
     @RequestMapping(value =  "/" , method = {RequestMethod.OPTIONS,RequestMethod.GET})
-    public ResponseMessage<Swarm> get(){
-        return new ResponseMessage<>(1,swarmHandler.getClusters());
+    public ResponseMessage get(){
+        return new ResponseMessage(1,swarmHandler.getClusters());
     }
     @RequestMapping(value = "/init", method = {RequestMethod.OPTIONS,RequestMethod.POST})
     public ResponseMessage<Boolean> initSwarm(@RequestBody SwarmSpec swarmSpec){
@@ -33,6 +34,11 @@ public class SwarmController {
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseMessage<Boolean> update(@RequestBody SwarmSpec swarmSpec,@RequestParam long version){
         return new ResponseMessage<>(1,swarmHandler.updateSwarm(swarmSpec,version));
+    }
+
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public ResponseMessage getInfo(){
+        return new ResponseMessage<>(1, swarmHandler.getInfo());
     }
 
 }

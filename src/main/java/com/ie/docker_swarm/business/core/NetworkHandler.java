@@ -19,12 +19,12 @@ public class NetworkHandler {
         return dockerClient.listNetworksCmd().exec();
     }
 
-    public boolean create(NetworkModel networkModel) {
+    public boolean create(NetworkModel networkModel,String type) {
         try {
             dockerClient.createNetworkCmd().withName(networkModel.getName()).withIpam(new Network.Ipam().withConfig( new Network.Ipam.Config()
                     .withSubnet(networkModel.getSubnet())
                     .withIpRange(networkModel.getIpRange()))
-            ).withDriver("bridge");
+            ).withDriver(type);
             return true;
         }catch (Exception e){
             e.printStackTrace();

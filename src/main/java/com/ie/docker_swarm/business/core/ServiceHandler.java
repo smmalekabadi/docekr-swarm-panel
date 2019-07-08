@@ -19,7 +19,7 @@ public class ServiceHandler {
             return dockerClient.createServiceCmd(serviceSpec).exec().getId();
         }catch (Exception e){
             e.printStackTrace();
-            return "something went wrong";
+            return null;
         }
     }
 

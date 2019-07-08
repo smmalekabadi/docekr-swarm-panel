@@ -3,6 +3,7 @@ package com.ie.docker_swarm.controller;
 import com.github.dockerjava.api.model.SearchItem;
 import com.ie.docker_swarm.business.core.ImageHandler;
 import com.ie.docker_swarm.utils.ResponseMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,17 +28,18 @@ public class ImageController {
             return new ResponseMessage<>(1,imageHandler.inspectImage(id));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseMessage<Boolean> addImage(@RequestParam String name) {
-        return new ResponseMessage<>(1, imageHandler.pullImage(name));
+    @RequestMapping(value = "/", method ={RequestMethod.OPTIONS, RequestMethod.PUT})
+    public ResponseMessage addImage(@RequestParam String name) {
+        boolean a = imageHandler.pullImage(name);
+        return new ResponseMessage<>(1, a ? a : HttpStatus.UNPROCESSABLE_ENTITY) ;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseMessage<?> updateImage(@RequestParam String name) {
+    @RequestMapping(value = "/", method ={RequestMethod.OPTIONS, RequestMethod.POST})
+    public ResponseMessage updateImage(@RequestParam String name) {
         return new ResponseMessage<>(1, imageHandler.pushImage(name));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/", method = {RequestMethod.OPTIONS,RequestMethod.DELETE})
     public ResponseMessage<Boolean> deleteImage(@RequestParam String id) {
         return new ResponseMessage<>(1, imageHandler.removeImage(id));
     }

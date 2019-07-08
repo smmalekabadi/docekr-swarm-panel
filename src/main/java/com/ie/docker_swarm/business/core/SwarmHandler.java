@@ -4,6 +4,8 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Swarm;
 import com.github.dockerjava.api.model.SwarmNode;
 import com.github.dockerjava.api.model.SwarmSpec;
+import com.ie.docker_swarm.business.data.MySwarm;
+import com.ie.docker_swarm.business.data.StartModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class SwarmHandler {
         this.dockerClient = dockerClient;
     }
 
-    public Swarm getClusters() {
-        return dockerClient.inspectSwarmCmd().exec();
+    public MySwarm getClusters() {
+        return new MySwarm(dockerClient.inspectSwarmCmd().exec(),System.currentTimeMillis());
 
     }
 
@@ -73,5 +75,14 @@ public class SwarmHandler {
             return false;
         }
 
+    }
+    public StartModel getInfo(){
+        StartModel startModel = new StartModel();
+        startModel.setContainerCountAll(dockerClient.listContainersCmd().withShowAll(true).exec().size());
+        startModel.setImageCount(dockerClient.listImagesCmd().exec().size());
+        startModel.setServiceCount(dockerClient.listServicesCmd().exec().size());
+        startModel.setNetworkCount(dockerClient.listNetworksCmd().exec().size());
+        startModel.setVolumsCount(dockerClient.listImagesCmd().exec().size());
+        return startModel;
     }
 }

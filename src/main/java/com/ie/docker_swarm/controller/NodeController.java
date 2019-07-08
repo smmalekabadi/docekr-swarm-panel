@@ -28,8 +28,8 @@ public class NodeController {
         return new ResponseMessage<>(1,swarmHandler.updateNode(version));
     }
 
-    @RequestMapping(value = "/test")
-    public ResponseMessage<Swarm> test(){
-        return new ResponseMessage<>(1,swarmHandler.getClusters());
-    }
+//    @RequestMapping(value = "/test")
+//    public ResponseMessage<Swarm> test(){
+//        return new ResponseMessage<>(1,swarmHandler.getClusters());
+//    }
 }

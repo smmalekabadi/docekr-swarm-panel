@@ -3,8 +3,10 @@ package com.ie.docker_swarm.business.core;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.InspectVolumeResponse;
 import com.github.dockerjava.api.command.ListVolumesResponse;
+import com.ie.docker_swarm.business.data.VolumeModel;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,23 +16,41 @@ public class VolumeHandler {
     public VolumeHandler(DockerClient dockerClient) {
         this.dockerClient = dockerClient;
     }
-    public List<InspectVolumeResponse> getVolumes(){
+
+    public List<VolumeModel> getVolumes() {
         ListVolumesResponse vol = dockerClient.listVolumesCmd().exec();
-        return vol.getVolumes();
+        List<VolumeModel> volumeModels = new ArrayList<>();
+        for (InspectVolumeResponse volume : vol.getVolumes()) {
+            volumeModels.add(new VolumeModel(volume, System.currentTimeMillis()));
+        }
+        return volumeModels;
     }
-    public String create(String name){
-        return dockerClient.createVolumeCmd().withName(name).exec().getName();
+
+    public VolumeModel create(String name) {
+        try {
+            VolumeModel vol = new VolumeModel(dockerClient.createVolumeCmd()
+                    .withName(name)
+//                    .withDriver(volume.getDriver())
+                    .exec(), System.currentTimeMillis());
+            return vol;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    public boolean remove(String name){
+
+    public boolean remove(String name) {
         try {
             dockerClient.removeVolumeCmd(name).exec();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    public InspectVolumeResponse inspect(String name){
+
+
+    public InspectVolumeResponse inspect(String name) {
         return dockerClient.inspectVolumeCmd(name).exec();
     }
 
